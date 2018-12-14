@@ -63,7 +63,7 @@ const serializeImgixUrlQueryParamListValue = pipe(
 );
 
 const throwErrorIfNotFinite = (n: number) => {
-    if (!Number.isFinite(n)) {
+    if (!isFinite(n)) {
         const error = new Error('Expected number to be finite');
         throw error;
     } else {
