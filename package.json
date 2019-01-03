@@ -18,9 +18,7 @@
     "target"
   ],
   "dependencies": {
-    "@types/lodash": "^4.14.119",
     "funfix-core": "^7.0.1",
-    "lodash": "^4.17.11",
     "url-transformers": "^0.0.1"
   },
   "devDependencies": {
