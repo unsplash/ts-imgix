@@ -19,7 +19,7 @@
   ],
   "dependencies": {
     "funfix-core": "^7.0.1",
-    "url-transformers": "^0.0.1"
+    "url-transformers": "^0.0.2"
   },
   "devDependencies": {
     "prettier": "^1.15.3",
