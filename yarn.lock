@@ -137,18 +137,6 @@ fs.realpath@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
 
-funfix-core@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/funfix-core/-/funfix-core-7.0.1.tgz#894a9f39ef582c5d6dcc9ef384381d12819e8094"
-  integrity sha1-iUqfOe9YLF1tzJ7zhDgdEoGegJQ=
-  dependencies:
-    funland "^0.1.4"
-
-funland@^0.1.4:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/funland/-/funland-0.1.5.tgz#abbe0c6e8477be1aeac07a17005ca4ca18f8c1a8"
-  integrity sha512-rwAiqVgWEj3+OrIlARf0ebHwcuoAqukkiqfq3+FPf1FAa2/tbdvxr/FPjJD3FnljSuktwWM3f8jHNRS6ASJIsw==
-
 glob@^7.1.1:
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.3.tgz#3960832d3f1574108342dafd3a67b332c0969df1"

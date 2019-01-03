@@ -34,7 +34,3 @@ npm install ts-imgix
 yarn
 npm run start
 ```
-
-Help wanted! TODO:
-
--   Remove dependencies: `funfix-core`

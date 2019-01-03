@@ -18,7 +18,6 @@
     "target"
   ],
   "dependencies": {
-    "funfix-core": "^7.0.1",
     "url-transformers": "^0.0.2"
   },
   "devDependencies": {

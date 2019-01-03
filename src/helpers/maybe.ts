@@ -1,4 +1,3 @@
-import { Option } from 'funfix-core';
 import { pickBy } from './index';
 
 type Maybe<T> = undefined | T;
@@ -19,6 +18,4 @@ export const catMaybesDictionary = <T>(maybesDictionary: {
     );
 
 export const mapValueIfDefined = <V, V2>(fn: (v: V) => V2) => (maybe: Maybe<V>) =>
-    Option.of(maybe)
-        .map(fn)
-        .getOrElse(undefined);
+    isMaybeDefined(maybe) ? fn(maybe) : undefined;
