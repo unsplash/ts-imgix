@@ -3,9 +3,13 @@
         "module": "commonjs",
         // Needed for Lodash
         "esModuleInterop": true,
+        // Assumption: most consumers of this lib will be using UglifyJS which does not support
+        // ES2015+ syntax, so we target ES5 instead.
         "target": "es5",
-        // TODO: polyfill?
-        "lib": ["es2015"],
+        "lib": [
+            // Assumption: most consumers of this lib will support ES2015 at runtime.
+            "es2015"
+        ],
         "strict": true,
         "noImplicitReturns": true,
         "sourceMap": true,
