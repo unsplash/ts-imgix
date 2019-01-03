@@ -1,5 +1,5 @@
 import { Option } from 'funfix-core';
-import pickBy from 'lodash/pickBy';
+import { pickBy } from './index';
 
 type Maybe<T> = undefined | T;
 
@@ -11,7 +11,12 @@ const isMaybeDefined = <T>(maybeT: Maybe<T>): maybeT is T => maybeT !== undefine
 // https://github.com/gcanti/fp-ts/blob/42870714ebcae4ecf132291c687c845b6837b7d2/docs/Record.md#compact
 export const catMaybesDictionary = <T>(maybesDictionary: {
     [index: string]: Maybe<T>;
-}): { [index: string]: T } => pickBy(maybesDictionary, isMaybeDefined);
+}): { [index: string]: T } =>
+    pickBy(
+        // This cast shouldn't be necessary: https://github.com/Microsoft/TypeScript/issues/29246
+        maybesDictionary as Record<string, Maybe<T>>,
+        (_key, value): value is T => isMaybeDefined(value),
+    );
 
 export const mapValueIfDefined = <V, V2>(fn: (v: V) => V2) => (maybe: Maybe<V>) =>
     Option.of(maybe)

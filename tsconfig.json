@@ -4,6 +4,8 @@
         // Needed for Lodash
         "esModuleInterop": true,
         "target": "es5",
+        // TODO: polyfill?
+        "lib": ["es2015"],
         "strict": true,
         "noImplicitReturns": true,
         "sourceMap": true,

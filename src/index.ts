@@ -1,8 +1,8 @@
 // tslint:disable-next-line match-default-export-name
 import pipe from 'lodash/flow';
-import pickBy from 'lodash/pickBy';
 import { ParsedUrlQuery } from 'querystring';
 import { addQueryToUrl } from 'url-transformers';
+import { pickBy } from './helpers';
 import { catMaybesDictionary, mapValueIfDefined } from './helpers/maybe';
 
 // https://docs.imgix.com/apis/url/size/fit
@@ -48,7 +48,8 @@ export type ImgixUrlQueryParams = {
     cs?: ImgixColorSpace;
 };
 
-const pickTrueInObject = (obj: {}) => pickBy(obj, value => value === true);
+const pickTrueInObject = <K extends string>(obj: Record<K, boolean>) =>
+    pickBy(obj, (_key, value): value is true => value);
 const pickTrueObjectKeys = pipe(
     pickTrueInObject,
     // tslint:disable-next-line no-unbound-method
