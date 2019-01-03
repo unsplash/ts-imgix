@@ -37,4 +37,4 @@ npm run start
 
 Help wanted! TODO:
 
--   Remove dependencies: `lodash`, `funfix-core`
+-   Remove dependencies: `funfix-core`
