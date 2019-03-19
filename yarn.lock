@@ -324,10 +324,10 @@ typescript@^3.2.2:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.2.tgz#fe8101c46aa123f8353523ebdcf5730c2ae493e5"
   integrity sha512-VCj5UiSyHBjwfYacmDuc/NOk4QQixbE+Wn7MFJuS0nRuPQbof132Pw4u53dm264O8LPc2MVsc7RJNml5szurkg==
 
-url-transformers@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/url-transformers/-/url-transformers-0.0.4.tgz#e73670ed88634fdf6d49266f77265df3db38dde4"
-  integrity sha512-dhXruf41umLzRwVd1slQaTsKcWrEj5bMk4B1jq2oT/4niH7KmIUHGIV0sKPzv2eqx2F8Q+6Pnb1wS40fiNuvhQ==
+url-transformers@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/url-transformers/-/url-transformers-0.0.5.tgz#44e9b4ba66efc948c51272c44bee7b06c3aa92ec"
+  integrity sha512-koExPs7ebAosDXURv7yf4WvGb2GGOzqOA4H9TCFluWav1ZjxfdyGwFsi/h0SYBiYuwx6jqhyvjg4W4yu7IHQzQ==
   dependencies:
     "@types/node" "^10.12.10"
 
