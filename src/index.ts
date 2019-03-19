@@ -62,15 +62,6 @@ const serializeImgixUrlQueryParamListValue = pipe(
     undefinedIfEmptyString,
 );
 
-const throwErrorIfNotFinite = (n: number) => {
-    if (!isFinite(n)) {
-        const error = new Error('Expected number to be finite');
-        throw error;
-    } else {
-        return n;
-    }
-};
-
 const mapToSerializedListValueIfDefined = mapValueIfDefined(serializeImgixUrlQueryParamListValue);
 
 // Note: if/when this PR is merged, this type will be available via the Node types.
