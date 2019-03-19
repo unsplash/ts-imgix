@@ -1,5 +1,4 @@
 // tslint:disable-next-line match-default-export-name
-import { ParsedUrlQuery } from 'querystring';
 import { addQueryToUrl } from 'url-transformers';
 import { pickBy } from './helpers';
 import { catMaybesDictionary, mapValueIfDefined } from './helpers/maybe';
@@ -72,28 +71,26 @@ const throwErrorIfNotFinite = (n: number) => {
     }
 };
 
-const mapFiniteNumberToStringIfDefined = mapValueIfDefined(
-    pipe(
-        throwErrorIfNotFinite,
-        String,
-    ),
-);
 const mapToSerializedListValueIfDefined = mapValueIfDefined(serializeImgixUrlQueryParamListValue);
 
-const serializeImgixUrlQueryParamValues = (query: ImgixUrlQueryParams): ParsedUrlQuery =>
+// Note: if/when this PR is merged, this type will be available via the Node types.
+// https://github.com/DefinitelyTyped/DefinitelyTyped/pull/33997
+type ParsedUrlQueryInput = { [key: string]: unknown };
+
+const serializeImgixUrlQueryParamValues = (query: ImgixUrlQueryParams): ParsedUrlQueryInput =>
     pipe(
-        (): Record<keyof ImgixUrlQueryParams, string | undefined> => ({
-            dpr: mapFiniteNumberToStringIfDefined(query.dpr),
+        (): Record<keyof ImgixUrlQueryParams, string | number | undefined> => ({
+            dpr: query.dpr,
             auto: mapToSerializedListValueIfDefined(query.auto),
             fit: query.fit,
-            w: mapFiniteNumberToStringIfDefined(query.w),
-            h: mapFiniteNumberToStringIfDefined(query.h),
-            q: mapFiniteNumberToStringIfDefined(query.q),
+            w: query.w,
+            h: query.h,
+            q: query.q,
             cs: query.cs,
             crop: mapToSerializedListValueIfDefined(query.crop),
             bg: query.bg,
             ch: mapToSerializedListValueIfDefined(query.ch),
-            blur: mapFiniteNumberToStringIfDefined(query.blur),
+            blur: query.blur,
         }),
         catMaybesDictionary,
     )({});
