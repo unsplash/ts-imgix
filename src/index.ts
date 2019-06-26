@@ -6,8 +6,15 @@ import { pipe } from './helpers/pipe';
 
 // https://docs.imgix.com/apis/url/size/fit
 export enum ImgixFit {
+    clamp = 'clamp',
+    clip = 'clip',
     crop = 'crop',
+    facearea = 'facearea',
+    fill = 'fill',
+    fillmax = 'fillmax',
     max = 'max',
+    min = 'min',
+    scale = 'scale',
 }
 
 // https://docs.imgix.com/apis/url/size/crop
@@ -45,6 +52,8 @@ export type ImgixUrlQueryParams = {
     ch?: ImgixClientHints;
     blur?: number;
     cs?: ImgixColorSpace;
+    faceindex?: number;
+    facepad?: number;
 };
 
 const pickTrueInObject = <K extends string>(obj: Record<K, boolean>) =>
@@ -82,6 +91,8 @@ const serializeImgixUrlQueryParamValues = (query: ImgixUrlQueryParams): ParsedUr
             bg: query.bg,
             ch: mapToSerializedListValueIfDefined(query.ch),
             blur: query.blur,
+            faceindex: query.faceindex,
+            facepad: query.facepad,
         }),
         catMaybesDictionary,
     )({});
