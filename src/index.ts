@@ -27,7 +27,7 @@ export enum ImgixColorSpace {
 }
 
 // https://docs.imgix.com/apis/url/auto
-export type ImgixAuto = Partial<Record<'compress' | 'format', boolean>>;
+export type ImgixAuto = Partial<Record<'compress' | 'enhance' | 'format' | 'redeye', boolean>>;
 
 // https://docs.imgix.com/apis/url/format/ch
 export type ImgixClientHints = Partial<Record<'width' | 'dpr' | 'saveData', boolean>>;
