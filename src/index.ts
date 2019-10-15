@@ -74,7 +74,7 @@ const serializeImgixUrlQueryParamListValue = pipe(
 
 const mapToSerializedListValueIfDefined = mapValueIfDefined(serializeImgixUrlQueryParamListValue);
 
-const ratioRegExp = /^\d+(\.\d{2})?:\d+(\.\d{2})?$/;
+const ratioRegExp = /^\d+(\.\d+)?:\d+(\.\d+)?$/;
 
 const validateRatio = (ratio: string | undefined): string | undefined => {
     if (typeof ratio === 'string' && !ratioRegExp.test(ratio)) {

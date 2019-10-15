@@ -15,7 +15,7 @@ assert.strictEqual(
 
 const invalidRatios = ['foo', '1:', 'foo:1', '1:foo'];
 
-const validRatios = ['1:1', '1.91:1', '1.91:1.28'];
+const validRatios = ['1:1', '1.91:1', '1.91:1.28', '1:1.28546'];
 
 assert.strictEqual(
     buildImgixUrl(baseUrl)({
