@@ -39,9 +39,15 @@ export type ImgixAuto = Partial<Record<'compress' | 'enhance' | 'format' | 'rede
 // https://docs.imgix.com/apis/url/format/ch
 export type ImgixClientHints = Partial<Record<'width' | 'dpr' | 'saveData', boolean>>;
 
+// https://docs.imgix.com/apis/url/size/ar
+export type ImgixAspectRatio = {
+    w: number;
+    h: number;
+};
+
 // https://docs.imgix.com/apis/url
 export type ImgixUrlQueryParams = {
-    ar?: string;
+    ar?: ImgixAspectRatio;
     auto?: ImgixAuto;
     q?: number;
     h?: number;
@@ -74,15 +80,6 @@ const serializeImgixUrlQueryParamListValue = pipe(
 
 const mapToSerializedListValueIfDefined = mapValueIfDefined(serializeImgixUrlQueryParamListValue);
 
-const ratioRegExp = /^\d+(\.\d+)?:\d+(\.\d+)?$/;
-
-const validateRatio = (ratio: string | undefined): string | undefined => {
-    if (typeof ratio === 'string' && !ratioRegExp.test(ratio)) {
-        throw Error('Invalid ratio');
-    }
-    return ratio;
-};
-
 // Note: if/when this PR is merged, this type will be available via the Node types.
 // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/33997
 type ParsedUrlQueryInput = { [key: string]: unknown };
@@ -90,7 +87,7 @@ type ParsedUrlQueryInput = { [key: string]: unknown };
 const serializeImgixUrlQueryParamValues = (query: ImgixUrlQueryParams): ParsedUrlQueryInput =>
     pipe(
         (): Record<keyof ImgixUrlQueryParams, string | number | undefined> => ({
-            ar: validateRatio(query.ar),
+            ar: typeof query.ar !== 'undefined' ? `${query.ar.w}:${query.ar.h}` : undefined,
             dpr: query.dpr,
             auto: mapToSerializedListValueIfDefined(query.auto),
             fit: query.fit,
