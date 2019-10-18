@@ -39,8 +39,15 @@ export type ImgixAuto = Partial<Record<'compress' | 'enhance' | 'format' | 'rede
 // https://docs.imgix.com/apis/url/format/ch
 export type ImgixClientHints = Partial<Record<'width' | 'dpr' | 'saveData', boolean>>;
 
+// https://docs.imgix.com/apis/url/size/ar
+export type ImgixAspectRatio = {
+    w: number;
+    h: number;
+};
+
 // https://docs.imgix.com/apis/url
 export type ImgixUrlQueryParams = {
+    ar?: ImgixAspectRatio;
     auto?: ImgixAuto;
     q?: number;
     h?: number;
@@ -80,6 +87,7 @@ type ParsedUrlQueryInput = { [key: string]: unknown };
 const serializeImgixUrlQueryParamValues = (query: ImgixUrlQueryParams): ParsedUrlQueryInput =>
     pipe(
         (): Record<keyof ImgixUrlQueryParams, string | number | undefined> => ({
+            ar: mapValueIfDefined((ar: ImgixAspectRatio) => `${ar.w}:${ar.h}`)(query.ar),
             dpr: query.dpr,
             auto: mapToSerializedListValueIfDefined(query.auto),
             fit: query.fit,
