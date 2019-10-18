@@ -18,6 +18,7 @@
     "target"
   ],
   "dependencies": {
+    "pipe-ts": "^0.0.8",
     "url-transformers": "^0.0.5"
   },
   "devDependencies": {
