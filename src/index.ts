@@ -63,7 +63,7 @@ export type ImgixUrlQueryParams = {
     facepad?: number;
 };
 
-const pickTrueInObject = <K extends string>(obj: Record<K, boolean>) =>
+const pickTrueInObject = <K extends string>(obj: Record<K, boolean>): Partial<Record<K, true>> =>
     pickBy(obj, (_key, value): value is true => value);
 const pickTrueObjectKeys = pipe(
     pickTrueInObject,
