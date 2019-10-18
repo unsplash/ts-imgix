@@ -1,8 +1,8 @@
 // tslint:disable-next-line match-default-export-name
+import { pipe, pipeWith } from 'pipe-ts';
 import { addQueryToUrl } from 'url-transformers';
 import { pickBy } from './helpers';
 import { catMaybesDictionary, mapValueIfDefined } from './helpers/maybe';
-import { pipe } from './helpers/pipe';
 
 // https://docs.imgix.com/apis/url/size/fit
 export enum ImgixFit {
@@ -94,7 +94,7 @@ type ParsedUrlQueryInput = { [key: string]: unknown };
 const serializeImgixUrlQueryParamValues = (query: ImgixUrlQueryParams): ParsedUrlQueryInput =>
     pipe(
         (): Record<keyof ImgixUrlQueryParams, string | number | undefined> => ({
-            ar: mapValueIfDefined((ar: ImgixAspectRatio) => `${ar.w}:${ar.h}`)(query.ar),
+            ar: pipeWith(query.ar, mapValueIfDefined(ar => `${ar.w}:${ar.h}`)),
             dpr: query.dpr,
             auto: mapToSerializedListValueIfDefined(query.auto),
             fit: query.fit,
@@ -110,7 +110,7 @@ const serializeImgixUrlQueryParamValues = (query: ImgixUrlQueryParams): ParsedUr
             facepad: query.facepad,
         }),
         catMaybesDictionary,
-    )({});
+    )();
 
 export const buildImgixUrl = (url: string) =>
     pipe(
