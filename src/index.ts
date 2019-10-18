@@ -1,5 +1,5 @@
 // tslint:disable-next-line match-default-export-name
-import { pipe } from 'pipe-ts';
+import { pipe, pipeWith } from 'pipe-ts';
 import { addQueryToUrl } from 'url-transformers';
 import { pickBy } from './helpers';
 import { catMaybesDictionary, mapValueIfDefined } from './helpers/maybe';
@@ -94,7 +94,7 @@ type ParsedUrlQueryInput = { [key: string]: unknown };
 const serializeImgixUrlQueryParamValues = (query: ImgixUrlQueryParams): ParsedUrlQueryInput =>
     pipe(
         (): Record<keyof ImgixUrlQueryParams, string | number | undefined> => ({
-            ar: mapValueIfDefined((ar: ImgixAspectRatio) => `${ar.w}:${ar.h}`)(query.ar),
+            ar: pipeWith(query.ar, mapValueIfDefined(ar => `${ar.w}:${ar.h}`)),
             dpr: query.dpr,
             auto: mapToSerializedListValueIfDefined(query.auto),
             fit: query.fit,
