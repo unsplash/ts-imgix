@@ -3,6 +3,7 @@ import { addQueryToUrl } from 'url-transformers';
 import { pickBy } from './helpers';
 import { catMaybesDictionary, mapValueIfDefined } from './helpers/maybe';
 import { pipe } from './helpers/pipe';
+import { ParsedUrlQueryInput } from 'querystring';
 
 // https://docs.imgix.com/apis/url/size/fit
 export enum ImgixFit {
@@ -79,10 +80,6 @@ const serializeImgixUrlQueryParamListValue = pipe(
 );
 
 const mapToSerializedListValueIfDefined = mapValueIfDefined(serializeImgixUrlQueryParamListValue);
-
-// Note: if/when this PR is merged, this type will be available via the Node types.
-// https://github.com/DefinitelyTyped/DefinitelyTyped/pull/33997
-type ParsedUrlQueryInput = { [key: string]: unknown };
 
 const serializeImgixUrlQueryParamValues = (query: ImgixUrlQueryParams): ParsedUrlQueryInput =>
     pipe(

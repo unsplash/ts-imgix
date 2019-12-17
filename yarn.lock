@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@types/node@^10.12.10":
-  version "10.12.18"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
-  integrity sha512-fh+pAqt4xRzPfqA6eh3Z2y6fyZavRIumvjhaCL753+TVkGKGhpPeyrJG2JftD0T9q4GF00KjefsQ+PQNDdWQaQ==
+"@types/node@^12.12.16":
+  version "12.12.18"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.18.tgz#8d16634797d63c2af5bc647ce879f8de20b56469"
+  integrity sha512-DBkZuIMFuAfjJHiunyRc+aNvmXYNwV1IPMgGKGlwCp6zh6MKrVtmvjSWK/axWcD25KJffkXgkfvFra8ndenXAw==
 
 ansi-regex@^2.0.0:
   version "2.1.1"
@@ -218,6 +218,11 @@ path-parse@^1.0.5:
   resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.6.tgz#d62dbb5679405d72c4737ec58600e9ddcf06d24c"
   integrity sha512-GSmOT2EbHrINBf9SR7CDELwlJ8AENk3Qn7OikK4nFYAu3Ote2+JYNVvkpAEQm3/TLNEJFD/xZJjzyxg3KBWOzw==
 
+pipe-ts@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/pipe-ts/-/pipe-ts-0.0.8.tgz#ceea3f69549b09f0678d644cf2f849a2f6526568"
+  integrity sha512-8c8/ZwMJGwkL0aTW064KhH+xsKM5Zj0T3mfTq+O8re4lVnCyJ0o3BmY8QqO6DS3B6t5Uiluj7wM+btC+oTdKpg==
+
 prettier@^1.15.3:
   version "1.15.3"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.15.3.tgz#1feaac5bdd181237b54dbe65d874e02a1472786a"
@@ -324,12 +329,13 @@ typescript@^3.2.2:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.2.tgz#fe8101c46aa123f8353523ebdcf5730c2ae493e5"
   integrity sha512-VCj5UiSyHBjwfYacmDuc/NOk4QQixbE+Wn7MFJuS0nRuPQbof132Pw4u53dm264O8LPc2MVsc7RJNml5szurkg==
 
-url-transformers@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/url-transformers/-/url-transformers-0.0.6.tgz#4fadf7e404006373ccd6ac669df534e02b314016"
-  integrity sha512-daMLg3PFw+yYgkabt0RQ7lKHGLj9doiIE37ipJWqirrMtD0HsOXQEXmYJCZw1GocLAWE5oSIPa9Velkg/xX8Lw==
+url-transformers@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/url-transformers/-/url-transformers-0.0.7.tgz#e448506e33b2a13a945a71209f47e751e8fa458e"
+  integrity sha512-oT0kVZaET4hSDns4XanjlM6vSSCK1kxMe/h2okvynf9SI9DnW4bl7Gxk+P8aW8Zef0EOEqEslHX2MW3wBvyu9Q==
   dependencies:
-    "@types/node" "^10.12.10"
+    "@types/node" "^12.12.16"
+    pipe-ts "^0.0.8"
 
 wrappy@1:
   version "1.0.2"
