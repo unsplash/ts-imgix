@@ -1,9 +1,9 @@
 // tslint:disable-next-line match-default-export-name
+import { ParsedUrlQueryInput } from 'querystring';
 import { addQueryToUrl } from 'url-transformers';
 import { pickBy } from './helpers';
 import { catMaybesDictionary, mapValueIfDefined } from './helpers/maybe';
 import { pipe } from './helpers/pipe';
-import { ParsedUrlQueryInput } from 'querystring';
 
 // https://docs.imgix.com/apis/url/size/fit
 export enum ImgixFit {
