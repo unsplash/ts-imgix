@@ -46,6 +46,14 @@ export type ImgixAspectRatio = {
     h: number;
 };
 
+// https://docs.imgix.com/apis/url/size/rect
+export type ImgixRect = {
+    x: number | 'left' | 'center' | 'right';
+    y: number | 'top' | 'middle' | 'bottom';
+    w: number;
+    h: number;
+};
+
 // https://docs.imgix.com/apis/url
 export type ImgixUrlQueryParams = {
     ar?: ImgixAspectRatio;
@@ -53,6 +61,7 @@ export type ImgixUrlQueryParams = {
     q?: number;
     h?: number;
     w?: number;
+    rect?: ImgixRect;
     fit?: ImgixFit;
     dpr?: number;
     crop?: ImgixCrop;
@@ -90,6 +99,9 @@ const serializeImgixUrlQueryParamValues = (query: ImgixUrlQueryParams): ParsedUr
             fit: query.fit,
             w: query.w,
             h: query.h,
+            rect: mapValueIfDefined((rect: ImgixRect) => `${rect.x},${rect.y},${rect.w},${rect.h}`)(
+                query.rect,
+            ),
             q: query.q,
             cs: query.cs,
             crop: mapToSerializedListValueIfDefined(query.crop),
