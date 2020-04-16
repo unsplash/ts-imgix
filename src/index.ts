@@ -98,6 +98,7 @@ const addImgixUrlQueryParamSignature = (url: string, token?: string) => (
     const formattedQuery = urlHelpers.format({ query });
     const { pathname } = new urlHelpers.URL(url);
 
+    // https://github.com/imgix/imgix-blueprint#securing-urls
     const signatureBase = token + pathname + formattedQuery;
     const signature = createHash('md5')
         .update(signatureBase)
