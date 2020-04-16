@@ -12,7 +12,7 @@ assert.strictEqual(
 );
 
 assert.strictEqual(
-    buildImgixUrl('https://foo.com')({
+    buildImgixUrl('https://foo.com', 'token')({
         auto: {
             format: true,
         },
