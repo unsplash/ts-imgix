@@ -1,7 +1,9 @@
 {
   "name": "ts-imgix",
-  "main": "./target/index.js",
+  "main": "./target/index.cjs.js",
+  "module": "./target/index.esm.js",
   "typings": "./target/index.d.ts",
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/unsplash/ts-imgix.git"
@@ -9,7 +11,7 @@
   "version": "0.0.11",
   "scripts": {
     "lint": "tslint --project ./tsconfig.json",
-    "compile": "rm -rf ./target/ && tsc",
+    "compile": "rm -rf ./target/ && rollup -c",
     "test": "npm run compile && node --require source-map-support/register ./target/tests.js",
     "format": "prettier --write './**/*.{ts,tsx,js,json,md}' '.prettierrc'",
     "prepublishOnly": "npm run test && npm run lint && npm run compile"
@@ -22,10 +24,14 @@
   },
   "devDependencies": {
     "prettier": "^1.15.3",
+    "rollup": "^2.7.2",
+    "rollup-plugin-auto-external": "^2.0.0",
+    "rollup-plugin-typescript2": "^0.27.0",
     "source-map-support": "^0.5.9",
+    "tslib": "^1.11.1",
     "tslint": "^5.11.0",
     "tslint-language-service": "^0.9.9",
     "tslint-no-unused": "^0.2.0-alpha.1",
-    "typescript": "^3.2.2"
+    "typescript": "^3.8.3"
   }
 }

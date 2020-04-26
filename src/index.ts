@@ -76,6 +76,7 @@ export type ImgixUrlQueryParams = {
 const pickTrueInObject = <K extends string>(obj: Record<K, boolean>): Partial<Record<K, true>> =>
     pickBy(obj, (_key, value): value is true => value);
 const pickTrueObjectKeys = pipe(
+    // @ts-ignore
     pickTrueInObject,
     // tslint:disable-next-line no-unbound-method
     Object.keys,
