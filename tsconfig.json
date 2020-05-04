@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "module": "esnext",
+        "moduleResolution": "node",
         // Assumption: most consumers of this lib will be using UglifyJS which does not support
         // ES2015+ syntax, so we target ES5 instead.
         "target": "es5",
