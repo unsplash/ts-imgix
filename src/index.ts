@@ -1,5 +1,7 @@
 // tslint:disable-next-line match-default-export-name
+import { createHash } from 'crypto';
 import { ParsedUrlQueryInput } from 'querystring';
+import * as urlHelpers from 'url';
 import { addQueryToUrl } from 'url-transformers';
 import { pickBy } from './helpers';
 import { catMaybesDictionary, mapValueIfDefined } from './helpers/maybe';
@@ -71,6 +73,7 @@ export type ImgixUrlQueryParams = {
     cs?: ImgixColorSpace;
     faceindex?: number;
     facepad?: number;
+    s?: string;
 };
 
 const pickTrueInObject = <K extends string>(obj: Record<K, boolean>): Partial<Record<K, true>> =>
@@ -87,6 +90,22 @@ const serializeImgixUrlQueryParamListValue = pipe(
     joinWithComma,
     undefinedIfEmptyString,
 );
+const addImgixUrlQueryParamSignature = (url: string, token?: string) => (
+    query: ParsedUrlQueryInput,
+) => {
+    if (token === undefined || query.hasOwnProperty('s')) return query;
+
+    const formattedQuery = urlHelpers.format({ query });
+    const { pathname } = new urlHelpers.URL(url);
+
+    // https://github.com/imgix/imgix-blueprint#securing-urls
+    const signatureBase = token + pathname + formattedQuery;
+    const signature = createHash('md5')
+        .update(signatureBase)
+        .digest('hex');
+
+    return { ...query, s: signature };
+};
 
 const mapToSerializedListValueIfDefined = mapValueIfDefined(serializeImgixUrlQueryParamListValue);
 
@@ -110,12 +129,14 @@ const serializeImgixUrlQueryParamValues = (query: ImgixUrlQueryParams): ParsedUr
             blur: query.blur,
             faceindex: query.faceindex,
             facepad: query.facepad,
+            s: query.s,
         }),
         catMaybesDictionary,
     )({});
 
-export const buildImgixUrl = (url: string) =>
+export const buildImgixUrl = (url: string, token?: string) =>
     pipe(
         serializeImgixUrlQueryParamValues,
+        addImgixUrlQueryParamSignature(url, token),
         query => addQueryToUrl({ url })({ queryToAppend: query }),
     );
