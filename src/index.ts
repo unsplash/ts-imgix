@@ -117,5 +117,5 @@ const serializeImgixUrlQueryParamValues = (query: ImgixUrlQueryParams): ParsedUr
 export const buildImgixUrl = (url: string) =>
     pipe(
         serializeImgixUrlQueryParamValues,
-        query => addQueryToUrl({ url })({ queryToAppend: query }),
+        query => addQueryToUrl(query)(url),
     );
