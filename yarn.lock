@@ -656,10 +656,10 @@ universalify@^0.1.0:
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
   integrity sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==
 
-url-transformers@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/url-transformers/-/url-transformers-0.0.8.tgz#2e811212b16627066260960b500ee1b231b1bed6"
-  integrity sha512-kQGG71rY9ERYFsVjo1YDDCVrJZSC6Z58r0y91wsURAZmmT5E5zJkLcgIqh8APIjARgRzBDAhmvrQXxXiT/ZrpA==
+url-transformers@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/url-transformers/-/url-transformers-0.0.9.tgz#64207dd10c2715b0cbdb63ef4a57a5081f52e577"
+  integrity sha512-TIyG0MDldSTdxdMGjosLc9vTLaAPxYw90DCcPrQKvR7pGDZXbQ+M+bstUAfT1aSzWR7F7OAvjHm/47A67nRizA==
   dependencies:
     "@types/node" "^12.12.16"
     pipe-ts "^0.0.8"
