@@ -72,18 +72,25 @@ export type ImgixUrlQueryParams = {
     faceindex?: number;
     facepad?: number;
 };
-
-const pickTrueInObject = <K extends string>(obj: Record<K, boolean>): Partial<Record<K, true>> =>
-    pickBy(obj, (_key, value): value is true => value);
+// TODO: remove cast and either make all functions allow partial, or all non-partial.
+// const pickTrueInObject = <K extends string>(obj: Record<K, boolean>) =>
+const pickTrueInObject = <K extends string>(
+    obj: Partial<Record<K, boolean>>,
+): Partial<Record<K, true>> =>
+    pickBy(obj as Record<K, boolean>, (_key, value): value is true => value);
 const pickTrueObjectKeys = pipe(
     pickTrueInObject,
-    // tslint:disable-next-line no-unbound-method
-    Object.keys,
+    // This function has an overload which breaks type inference. See:
+    // https://github.com/Microsoft/TypeScript/issues/29904#issuecomment-471105473. We workaround this
+    // by wrapping the function.
+    obj => Object.keys(obj),
 );
 const undefinedIfEmptyString = (str: string): string | undefined => (str === '' ? undefined : str);
 const joinWithComma = (strs: string[]) => strs.join(',');
 const serializeImgixUrlQueryParamListValue = pipe(
     pickTrueObjectKeys,
+    // Needed to workaround https://github.com/microsoft/TypeScript/issues/29904#issuecomment-543785534
+    value => value,
     joinWithComma,
     undefinedIfEmptyString,
 );
