@@ -5,6 +5,9 @@ import { pickBy } from './helpers';
 import { catMaybesDictionary, mapValueIfDefined } from './helpers/maybe';
 import { pipe } from './helpers/pipe';
 
+// Omit is only available from TS 3.5 onwards
+type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
+
 // https://docs.imgix.com/apis/url/size/fit
 export enum ImgixFit {
     clamp = 'clamp',
@@ -71,7 +74,10 @@ export type ImgixUrlQueryParams = {
     cs?: ImgixColorSpace;
     faceindex?: number;
     facepad?: number;
+    'min-h'?: number;
 };
+
+export type QueryParamsInput = Omit<ImgixUrlQueryParams, 'min-h'> & { minH?: number };
 
 const pickTrueInObject = <K extends string>(obj: Record<K, boolean>): Partial<Record<K, true>> =>
     pickBy(obj, (_key, value): value is true => value);
@@ -90,7 +96,7 @@ const serializeImgixUrlQueryParamListValue = pipe(
 
 const mapToSerializedListValueIfDefined = mapValueIfDefined(serializeImgixUrlQueryParamListValue);
 
-const serializeImgixUrlQueryParamValues = (query: ImgixUrlQueryParams): ParsedUrlQueryInput =>
+const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQueryInput =>
     pipe(
         (): Record<keyof ImgixUrlQueryParams, string | number | undefined> => ({
             ar: mapValueIfDefined((ar: ImgixAspectRatio) => `${ar.w}:${ar.h}`)(query.ar),
@@ -110,6 +116,7 @@ const serializeImgixUrlQueryParamValues = (query: ImgixUrlQueryParams): ParsedUr
             blur: query.blur,
             faceindex: query.faceindex,
             facepad: query.facepad,
+            'min-h': query.minH,
         }),
         catMaybesDictionary,
     )({});

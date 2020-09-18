@@ -7,6 +7,7 @@ assert.strictEqual(
             format: true,
         },
         w: 300,
+        minH: 300,
     }),
-    'https://foo.com/?auto=format&w=300',
+    'https://foo.com/?auto=format&w=300&min-h=300',
 );
