@@ -6,6 +6,7 @@ import { catMaybesDictionary, mapValueIfDefined } from './helpers/maybe';
 import { pipe } from './helpers/pipe';
 
 // Omit is only available from TS 3.5 onwards
+// tslint:disable-next-line
 type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
 
 // https://docs.imgix.com/apis/url/size/fit
