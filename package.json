@@ -20,7 +20,7 @@
     "target"
   ],
   "dependencies": {
-    "url-transformers": "^0.0.9"
+    "url-transformers": "^0.0.10"
   },
   "devDependencies": {
     "prettier": "^1.15.3",

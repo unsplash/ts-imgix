@@ -16,10 +16,10 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
   integrity sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==
 
-"@types/node@^12.12.16":
-  version "12.12.18"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.18.tgz#8d16634797d63c2af5bc647ce879f8de20b56469"
-  integrity sha512-DBkZuIMFuAfjJHiunyRc+aNvmXYNwV1IPMgGKGlwCp6zh6MKrVtmvjSWK/axWcD25KJffkXgkfvFra8ndenXAw==
+"@types/node@^14.14.16":
+  version "14.14.31"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.31.tgz#72286bd33d137aa0d152d47ec7c1762563d34055"
+  integrity sha512-vFHy/ezP5qI0rFgJ7aQnjDXwAMrG0KqqIH7tQG5PPv3BWBayOPIQNBjVc/P6hhdZfMx51REc6tfDNXHUio893g==
 
 ansi-regex@^2.0.0:
   version "2.1.1"
@@ -201,6 +201,11 @@ find-up@^4.0.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
+fp-ts@^2.9.2:
+  version "2.9.5"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.9.5.tgz#6690cd8b76b84214a38fc77cbbbd04a38f86ea90"
+  integrity sha512-MiHrA5teO6t8zKArE3DdMPT/Db6v2GUt5yfWnhBTrrsVfeCJUUnV6sgFvjGNBKDmEMqVwRFkEePL7wPwqrLKKA==
+
 fs-extra@8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-8.1.0.tgz#49d43c45a88cd9677668cb7be1b46efdb8d2e1c0"
@@ -348,6 +353,11 @@ mock-require@^2.0.2:
   dependencies:
     caller-id "^0.1.0"
 
+monocle-ts@^2.3.3:
+  version "2.3.5"
+  resolved "https://registry.yarnpkg.com/monocle-ts/-/monocle-ts-2.3.5.tgz#1ff90b08616254b887e4c2bc5b2a9764fed16723"
+  integrity sha512-Xm9jdWvqFrlV0k965eY5AlCpWIIUBY2ExzGbEG+byMs+mZI4J7zvaUOLpQ8MTFgkpgyEnu4qUhuZT/Or3QeRiA==
+
 normalize-package-data@^2.3.2:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-2.5.0.tgz#e66db1838b200c1dfc233225d12cb36520e234a8"
@@ -423,11 +433,6 @@ pify@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-3.0.0.tgz#e5a4acd2c101fdf3d9a4d07f0dbc4db49dd28176"
   integrity sha1-5aSs0sEB/fPZpNB/DbxNtJ3SgXY=
-
-pipe-ts@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/pipe-ts/-/pipe-ts-0.0.8.tgz#ceea3f69549b09f0678d644cf2f849a2f6526568"
-  integrity sha512-8c8/ZwMJGwkL0aTW064KhH+xsKM5Zj0T3mfTq+O8re4lVnCyJ0o3BmY8QqO6DS3B6t5Uiluj7wM+btC+oTdKpg==
 
 pkg-dir@^4.1.0:
   version "4.2.0"
@@ -639,13 +644,14 @@ universalify@^0.1.0:
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
   integrity sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==
 
-url-transformers@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/url-transformers/-/url-transformers-0.0.9.tgz#64207dd10c2715b0cbdb63ef4a57a5081f52e577"
-  integrity sha512-TIyG0MDldSTdxdMGjosLc9vTLaAPxYw90DCcPrQKvR7pGDZXbQ+M+bstUAfT1aSzWR7F7OAvjHm/47A67nRizA==
+url-transformers@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/url-transformers/-/url-transformers-0.0.10.tgz#c2f430e9f482dd456a28ea0340f5deab1584e7b7"
+  integrity sha512-n8lEJ560tGbpKhisR+l4dqKf+owzTDRSMIQXT9/BWdEUjt8dtG0TMoaabFT8CsHINvMxsyWKui5ehId3raAPog==
   dependencies:
-    "@types/node" "^12.12.16"
-    pipe-ts "^0.0.8"
+    "@types/node" "^14.14.16"
+    fp-ts "^2.9.2"
+    monocle-ts "^2.3.3"
 
 validate-npm-package-license@^3.0.1:
   version "3.0.4"
