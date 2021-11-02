@@ -23,7 +23,7 @@
     "url-transformers": "^0.0.10"
   },
   "devDependencies": {
-    "prettier": "^1.15.3",
+    "prettier": "^2.4.1",
     "rollup": "^2.7.2",
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-typescript2": "^0.27.0",
@@ -31,6 +31,6 @@
     "tslint": "^5.11.0",
     "tslint-language-service": "^0.9.9",
     "tslint-no-unused": "^0.2.0-alpha.1",
-    "typescript": "^3.2.2"
+    "typescript": "^4.4.4"
   }
 }
