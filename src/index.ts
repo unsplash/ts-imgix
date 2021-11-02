@@ -2,8 +2,8 @@
 import { ParsedUrlQueryInput } from 'querystring';
 import { addQueryToUrl } from 'url-transformers';
 import { pickBy } from './helpers';
+import { flow } from './helpers/flow';
 import { catMaybesDictionary, mapValueIfDefined } from './helpers/maybe';
-import { pipe } from './helpers/pipe';
 
 // Omit is only available from TS 3.5 onwards
 // tslint:disable-next-line
@@ -82,14 +82,14 @@ export type QueryParamsInput = Omit<ImgixUrlQueryParams, 'min-h'> & { minH?: num
 
 const pickTrueInObject = <K extends string>(obj: Record<K, boolean>): Partial<Record<K, true>> =>
     pickBy(obj, (_key, value): value is true => value);
-const pickTrueObjectKeys = pipe(
+const pickTrueObjectKeys = flow(
     pickTrueInObject,
     // tslint:disable-next-line no-unbound-method
     Object.keys,
 );
 const undefinedIfEmptyString = (str: string): string | undefined => (str === '' ? undefined : str);
 const joinWithComma = (strs: string[]) => strs.join(',');
-const serializeImgixUrlQueryParamListValue = pipe(
+const serializeImgixUrlQueryParamListValue = flow(
     pickTrueObjectKeys,
     joinWithComma,
     undefinedIfEmptyString,
@@ -97,33 +97,29 @@ const serializeImgixUrlQueryParamListValue = pipe(
 
 const mapToSerializedListValueIfDefined = mapValueIfDefined(serializeImgixUrlQueryParamListValue);
 
-const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQueryInput =>
-    pipe(
-        (): Record<keyof ImgixUrlQueryParams, string | number | undefined> => ({
-            ar: mapValueIfDefined((ar: ImgixAspectRatio) => `${ar.w}:${ar.h}`)(query.ar),
-            dpr: query.dpr,
-            auto: mapToSerializedListValueIfDefined(query.auto),
-            fit: query.fit,
-            w: query.w,
-            h: query.h,
-            rect: mapValueIfDefined((rect: ImgixRect) => `${rect.x},${rect.y},${rect.w},${rect.h}`)(
-                query.rect,
-            ),
-            q: query.q,
-            cs: query.cs,
-            crop: mapToSerializedListValueIfDefined(query.crop),
-            bg: query.bg,
-            ch: mapToSerializedListValueIfDefined(query.ch),
-            blur: query.blur,
-            faceindex: query.faceindex,
-            facepad: query.facepad,
-            'min-h': query.minH,
-        }),
-        catMaybesDictionary,
-    )({});
+const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQueryInput => {
+    const imgixUrlQueryParams: Record<keyof ImgixUrlQueryParams, string | number | undefined> = {
+        ar: mapValueIfDefined((ar: ImgixAspectRatio) => `${ar.w}:${ar.h}`)(query.ar),
+        dpr: query.dpr,
+        auto: mapToSerializedListValueIfDefined(query.auto),
+        fit: query.fit,
+        w: query.w,
+        h: query.h,
+        rect: mapValueIfDefined((rect: ImgixRect) => `${rect.x},${rect.y},${rect.w},${rect.h}`)(
+            query.rect,
+        ),
+        q: query.q,
+        cs: query.cs,
+        crop: mapToSerializedListValueIfDefined(query.crop),
+        bg: query.bg,
+        ch: mapToSerializedListValueIfDefined(query.ch),
+        blur: query.blur,
+        faceindex: query.faceindex,
+        facepad: query.facepad,
+        'min-h': query.minH,
+    };
+    return catMaybesDictionary(imgixUrlQueryParams);
+};
 
 export const buildImgixUrl = (url: string) =>
-    pipe(
-        serializeImgixUrlQueryParamValues,
-        query => addQueryToUrl(query)(url),
-    );
+    flow(serializeImgixUrlQueryParamValues, (query) => addQueryToUrl(query)(url));
