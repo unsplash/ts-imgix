@@ -18,6 +18,23 @@ export enum ImgixFit {
     scale = 'scale',
 }
 
+export enum ImgixFormat {
+    avif = 'avif',
+    gif = 'gif',
+    jp2 = 'jp2',
+    jpg = 'jpg',
+    json = 'json',
+    jxr = 'jxr',
+    pjpg = 'pjpg',
+    mp4 = 'mp4',
+    png = 'png',
+    png8 = 'png8',
+    png32 = 'png32',
+    webm = 'webm',
+    webp = 'webp',
+    blurhash = 'blurhash',
+}
+
 // https://docs.imgix.com/apis/url/size/crop
 export type ImgixCrop = Partial<
     Record<
@@ -88,7 +105,6 @@ export type ImgixUrlQueryParams = {
     'txt-color'?: string;
     'txt-size'?: number;
     'txt-align'?: ImgixMarkAlign;
-    fm?: string;
     'txt-font'?: string;
     'blend-align'?: ImgixMarkAlign;
     'blend-mode'?: string;
@@ -97,6 +113,7 @@ export type ImgixUrlQueryParams = {
     mask?: string;
     blendW?: number;
     blendX?: number;
+    fm?: ImgixFormat;
 };
 
 type KebabToCamelCase<S extends string> = S extends `${infer T}-${infer U}`
