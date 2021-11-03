@@ -22,6 +22,23 @@ export enum ImgixFit {
     scale = 'scale',
 }
 
+export enum ImgixFormat {
+    avif = 'avif',
+    gif = 'gif',
+    jp2 = 'jp2',
+    jpg = 'jpg',
+    json = 'json',
+    jxr = 'jxr',
+    pjpg = 'pjpg',
+    mp4 = 'mp4',
+    png = 'png',
+    png8 = 'png8',
+    png32 = 'png32',
+    webm = 'webm',
+    webp = 'webp',
+    blurhash = 'blurhash',
+}
+
 // https://docs.imgix.com/apis/url/size/crop
 export type ImgixCrop = Partial<
     Record<
@@ -76,6 +93,7 @@ export type ImgixUrlQueryParams = {
     faceindex?: number;
     facepad?: number;
     'min-h'?: number;
+    fm?: ImgixFormat;
 };
 
 export type QueryParamsInput = Omit<ImgixUrlQueryParams, 'min-h'> & { minH?: number };
@@ -118,6 +136,7 @@ const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQu
             faceindex: query.faceindex,
             facepad: query.facepad,
             'min-h': query.minH,
+            fm: query.fm,
         }),
         catMaybesDictionary,
     )({});
