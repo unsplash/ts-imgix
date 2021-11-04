@@ -4,7 +4,7 @@ import { addQueryToUrl } from 'url-transformers';
 import { pickBy } from './helpers';
 import { flow } from './helpers/flow';
 import { catMaybesDictionary, mapValueIfDefined } from './helpers/maybe';
-
+import * as Base64 from './helpers/base64';
 // Omit is only available from TS 3.5 onwards
 // tslint:disable-next-line
 type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
@@ -85,6 +85,9 @@ export type ImgixUrlQueryParams = {
     'mark-align'?: ImgixMarkAlign;
     'mark-pad'?: number;
     markY?: number;
+    mark64?: string;
+    blend64?: string;
+    txt64?: string;
     'txt-color'?: string;
     'txt-size'?: number;
     'txt-align'?: ImgixMarkAlign;
@@ -102,7 +105,9 @@ type KebabToCamelCase<S extends string> = S extends `${infer T}-${infer U}`
 
 /*in the userland, the properties are Camel Case and any property ending with 64 requires a base64Uri type*/
 export type QueryParamsInput = {
-    [K in keyof ImgixUrlQueryParams as KebabToCamelCase<K>]: ImgixUrlQueryParams[K];
+    [K in keyof ImgixUrlQueryParams as KebabToCamelCase<K>]: K extends `${infer _T}64`
+        ? Base64.Base64Uri
+        : ImgixUrlQueryParams[K];
 };
 
 const pickTrueInObject = <K extends string>(obj: Record<K, boolean>): Partial<Record<K, true>> =>
@@ -112,6 +117,7 @@ const pickTrueObjectKeys = flow(
     // tslint:disable-next-line no-unbound-method
     Object.keys,
 );
+
 const undefinedIfEmptyString = (str: string): string | undefined => (str === '' ? undefined : str);
 const joinWithComma = (strs: string[]) => strs.join(',');
 const serializeImgixUrlQueryParamListValue = flow(
@@ -146,6 +152,9 @@ const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQu
         'mark-align': query.markAlign,
         'mark-pad': query.markPad,
         markY: query.markY,
+        mark64: query.mark64 !== undefined ? Base64.toString(query.mark64) : undefined,
+        blend64: query.blend64 !== undefined ? Base64.toString(query.blend64) : undefined,
+        txt64: query.txt64 !== undefined ? Base64.toString(query.txt64) : undefined,
         'txt-color': query.txtColor,
         'txt-size': query.txtSize,
         'txt-align': query.txtAlign,
@@ -161,3 +170,5 @@ const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQu
 
 export const buildImgixUrl = (url: string) =>
     flow(serializeImgixUrlQueryParamValues, (query) => addQueryToUrl(query)(url));
+
+export const makeBase64Uri = Base64.make;
