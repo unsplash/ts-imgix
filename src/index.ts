@@ -58,6 +58,11 @@ export type ImgixRect = {
     h: number;
 };
 
+// https://docs.imgix.com/apis/rendering/watermark/mark-align
+export type ImgixMarkAlignBase = 'top' | 'middle' | 'bottom' | 'left' | 'center' | 'right';
+// The api allows the user to combine the align values with a comma
+export type ImgixMarkAlign = `${ImgixMarkAlignBase},${ImgixMarkAlignBase}` | ImgixMarkAlignBase;
+
 // https://docs.imgix.com/apis/url
 export type ImgixUrlQueryParams = {
     ar?: ImgixAspectRatio;
@@ -76,9 +81,28 @@ export type ImgixUrlQueryParams = {
     faceindex?: number;
     facepad?: number;
     'min-h'?: number;
+    'mark-w'?: number;
+    'mark-align'?: ImgixMarkAlign;
+    'mark-pad'?: number;
+    markY?: number;
+    'txt-color'?: string;
+    'txt-size'?: number;
+    'txt-align'?: ImgixMarkAlign;
+    fm?: string;
+    'txt-font'?: string;
+    'blend-mode'?: string;
+    'blend-alpha'?: number;
+    mask?: string;
+    blendW?: number;
 };
 
-export type QueryParamsInput = Omit<ImgixUrlQueryParams, 'min-h'> & { minH?: number };
+type KebabToCamelCase<S extends string> = S extends `${infer T}-${infer U}`
+    ? `${T}${Capitalize<KebabToCamelCase<U>>}`
+    : S;
+
+export type QueryParamsInput = {
+    [K in keyof ImgixUrlQueryParams as KebabToCamelCase<K>]: ImgixUrlQueryParams[K];
+};
 
 const pickTrueInObject = <K extends string>(obj: Record<K, boolean>): Partial<Record<K, true>> =>
     pickBy(obj, (_key, value): value is true => value);
@@ -117,6 +141,19 @@ const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQu
         faceindex: query.faceindex,
         facepad: query.facepad,
         'min-h': query.minH,
+        'mark-w': query.markW,
+        'mark-align': query.markAlign,
+        'mark-pad': query.markPad,
+        markY: query.markY,
+        'txt-color': query.txtColor,
+        'txt-size': query.txtSize,
+        'txt-align': query.txtAlign,
+        fm: query.fm,
+        'txt-font': query.txtFont,
+        'blend-mode': query.blendMode,
+        'blend-alpha': query.blendAlpha,
+        blendW: query.blendW,
+        mask: query.mask,
     };
     return catMaybesDictionary(imgixUrlQueryParams);
 };
