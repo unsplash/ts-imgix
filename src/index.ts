@@ -85,15 +85,22 @@ export type ImgixUrlQueryParams = {
     'mark-align'?: ImgixMarkAlign;
     'mark-pad'?: number;
     markY?: number;
+    mark64?: string;
+    markX?: number;
+    blend64?: string;
+    txt64?: string;
     'txt-color'?: string;
     'txt-size'?: number;
     'txt-align'?: ImgixMarkAlign;
     fm?: string;
     'txt-font'?: string;
+    'blend-align'?: ImgixMarkAlign;
     'blend-mode'?: string;
+    'blend-pad'?: number;
     'blend-alpha'?: number;
     mask?: string;
     blendW?: number;
+    blendX?: number;
 };
 
 type KebabToCamelCase<S extends string> = S extends `${infer T}-${infer U}`
@@ -111,6 +118,7 @@ const pickTrueObjectKeys = flow(
     // tslint:disable-next-line no-unbound-method
     Object.keys,
 );
+
 const undefinedIfEmptyString = (str: string): string | undefined => (str === '' ? undefined : str);
 const joinWithComma = (strs: string[]) => strs.join(',');
 const serializeImgixUrlQueryParamListValue = flow(
@@ -145,6 +153,9 @@ const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQu
         'mark-align': query.markAlign,
         'mark-pad': query.markPad,
         markY: query.markY,
+        mark64: query.mark64,
+        blend64: query.blend64,
+        txt64: query.txt64,
         'txt-color': query.txtColor,
         'txt-size': query.txtSize,
         'txt-align': query.txtAlign,
@@ -152,8 +163,12 @@ const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQu
         'txt-font': query.txtFont,
         'blend-mode': query.blendMode,
         'blend-alpha': query.blendAlpha,
+        'blend-pad': query.blendPad,
         blendW: query.blendW,
         mask: query.mask,
+        'blend-align': query.blendAlign,
+        blendX: query.blendX,
+        markX: query.markX,
     };
     return catMaybesDictionary(imgixUrlQueryParams);
 };
