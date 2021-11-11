@@ -125,6 +125,7 @@ export type ImgixUrlQueryParams = {
     'txt-size'?: number;
     'txt-align'?: ImgixMarkAlign;
     'txt-font'?: string;
+    'txt-pad'?: number;
     'blend-align'?: ImgixMarkAlign;
     'blend-mode'?: ImgixBlendMode;
     'blend-pad'?: number;
@@ -191,6 +192,7 @@ const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQu
         'txt-color': query.txtColor,
         'txt-size': query.txtSize,
         'txt-align': query.txtAlign,
+        'txt-pad': query.txtPad,
         fm: query.fm,
         'txt-font': query.txtFont,
         'blend-mode': query.blendMode,
