@@ -35,6 +35,25 @@ export enum ImgixFormat {
     blurhash = 'blurhash',
 }
 
+export enum ImgixBlendMode {
+    normal = 'normal',
+    darken = 'darken',
+    multiply = 'multiply',
+    burn = 'burn',
+    lighten = 'lighten',
+    screen = 'screen',
+    dodge = 'dodge',
+    overlay = 'overlay',
+    softlight = 'softlight',
+    hardlight = 'hardlight',
+    difference = 'difference',
+    exclusion = 'exclusion',
+    color = 'color',
+    hue = 'hue',
+    saturation = 'saturation',
+    luminosity = 'luminosity',
+}
+
 // https://docs.imgix.com/apis/url/size/crop
 export type ImgixCrop = Partial<
     Record<
@@ -107,7 +126,7 @@ export type ImgixUrlQueryParams = {
     'txt-align'?: ImgixMarkAlign;
     'txt-font'?: string;
     'blend-align'?: ImgixMarkAlign;
-    'blend-mode'?: string;
+    'blend-mode'?: ImgixBlendMode;
     'blend-pad'?: number;
     'blend-alpha'?: number;
     mask?: string;
