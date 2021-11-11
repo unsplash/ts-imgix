@@ -95,6 +95,13 @@ export type ImgixMarkAlignBase = 'top' | 'middle' | 'bottom' | 'left' | 'center'
 // The api allows the user to combine the align values with a comma
 export type ImgixMarkAlign = `${ImgixMarkAlignBase},${ImgixMarkAlignBase}` | ImgixMarkAlignBase;
 
+export enum ImgixTxtClip {
+    start = 'start',
+    middle = 'middle',
+    end = 'end',
+    ellipsis = 'ellipsis',
+}
+
 // https://docs.imgix.com/apis/url
 export type ImgixUrlQueryParams = {
     ar?: ImgixAspectRatio;
@@ -127,6 +134,7 @@ export type ImgixUrlQueryParams = {
     'txt-font'?: string;
     'txt-pad'?: number;
     'txt-width'?: number;
+    'txt-clip'?: ImgixTxtClip;
     'blend-align'?: ImgixMarkAlign;
     'blend-mode'?: ImgixBlendMode;
     'blend-pad'?: number;
@@ -195,6 +203,7 @@ const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQu
         'txt-align': query.txtAlign,
         'txt-pad': query.txtPad,
         'txt-width': query.txtWidth,
+        'txt-clip': query.txtClip,
         fm: query.fm,
         'txt-font': query.txtFont,
         'blend-mode': query.blendMode,
