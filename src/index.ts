@@ -123,9 +123,9 @@ export type ImgixUrlQueryParams = {
     'mark-w'?: number;
     'mark-align'?: ImgixMarkAlign;
     'mark-pad'?: number;
-    markY?: number;
+    'mark-y'?: number;
     mark64?: string;
-    markX?: number;
+    'mark-x'?: number;
     blend64?: string;
     txt64?: string;
     'txt-color'?: string;
@@ -140,8 +140,8 @@ export type ImgixUrlQueryParams = {
     'blend-pad'?: number;
     'blend-alpha'?: number;
     mask?: string;
-    blendW?: number;
-    blendX?: number;
+    'blend-w'?: number;
+    'blend-x'?: number;
     fm?: ImgixFormat;
 };
 
@@ -194,7 +194,7 @@ const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQu
         'mark-w': query.markW,
         'mark-align': query.markAlign,
         'mark-pad': query.markPad,
-        markY: query.markY,
+        'mark-y': query.markY,
         mark64: query.mark64,
         blend64: query.blend64,
         txt64: query.txt64,
@@ -209,11 +209,11 @@ const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQu
         'blend-mode': query.blendMode,
         'blend-alpha': query.blendAlpha,
         'blend-pad': query.blendPad,
-        blendW: query.blendW,
+        'blend-w': query.blendW,
         mask: query.mask,
         'blend-align': query.blendAlign,
-        blendX: query.blendX,
-        markX: query.markX,
+        'blend-x': query.blendX,
+        'mark-x': query.markX,
     };
     return catMaybesDictionary(imgixUrlQueryParams);
 };
