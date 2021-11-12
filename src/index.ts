@@ -90,10 +90,14 @@ export type ImgixRect = {
     h: number;
 };
 
+type Combinations<T extends string, U extends string = T> = T extends String
+    ? T | `${T},${Exclude<U, T>}`
+    : never;
+
 // https://docs.imgix.com/apis/rendering/watermark/mark-align
 export type ImgixMarkAlignBase = 'top' | 'middle' | 'bottom' | 'left' | 'center' | 'right';
 // The api allows the user to combine the align values with a comma
-export type ImgixMarkAlign = `${ImgixMarkAlignBase},${ImgixMarkAlignBase}` | ImgixMarkAlignBase;
+type ImgixMarkAlign = Combinations<ImgixMarkAlignBase>;
 
 export enum ImgixTxtClip {
     start = 'start',
