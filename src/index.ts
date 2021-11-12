@@ -2,12 +2,8 @@
 import { ParsedUrlQueryInput } from 'querystring';
 import { addQueryToUrl } from 'url-transformers';
 import { pickBy } from './helpers';
+import { flow } from './helpers/flow';
 import { catMaybesDictionary, mapValueIfDefined } from './helpers/maybe';
-import { pipe } from './helpers/pipe';
-
-// Omit is only available from TS 3.5 onwards
-// tslint:disable-next-line
-type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
 
 // https://docs.imgix.com/apis/url/size/fit
 export enum ImgixFit {
@@ -37,6 +33,25 @@ export enum ImgixFormat {
     webm = 'webm',
     webp = 'webp',
     blurhash = 'blurhash',
+}
+
+export enum ImgixBlendMode {
+    normal = 'normal',
+    darken = 'darken',
+    multiply = 'multiply',
+    burn = 'burn',
+    lighten = 'lighten',
+    screen = 'screen',
+    dodge = 'dodge',
+    overlay = 'overlay',
+    softlight = 'softlight',
+    hardlight = 'hardlight',
+    difference = 'difference',
+    exclusion = 'exclusion',
+    color = 'color',
+    hue = 'hue',
+    saturation = 'saturation',
+    luminosity = 'luminosity',
 }
 
 // https://docs.imgix.com/apis/url/size/crop
@@ -75,6 +90,22 @@ export type ImgixRect = {
     h: number;
 };
 
+type Combinations<T extends string, U extends string = T> = T extends String
+    ? T | `${T},${Exclude<U, T>}`
+    : never;
+
+// https://docs.imgix.com/apis/rendering/watermark/mark-align
+export type ImgixMarkAlignBase = 'top' | 'middle' | 'bottom' | 'left' | 'center' | 'right';
+// The api allows the user to combine the align values with a comma
+type ImgixMarkAlign = Combinations<ImgixMarkAlignBase>;
+
+export enum ImgixTxtClip {
+    start = 'start',
+    middle = 'middle',
+    end = 'end',
+    ellipsis = 'ellipsis',
+}
+
 // https://docs.imgix.com/apis/url
 export type ImgixUrlQueryParams = {
     ar?: ImgixAspectRatio;
@@ -93,21 +124,50 @@ export type ImgixUrlQueryParams = {
     faceindex?: number;
     facepad?: number;
     'min-h'?: number;
+    'mark-w'?: number;
+    'mark-align'?: ImgixMarkAlign;
+    'mark-pad'?: number;
+    'mark-y'?: number;
+    mark64?: string;
+    'mark-x'?: number;
+    blend64?: string;
+    txt64?: string;
+    'txt-color'?: string;
+    'txt-size'?: number;
+    'txt-align'?: ImgixMarkAlign;
+    'txt-font'?: string;
+    'txt-pad'?: number;
+    'txt-width'?: number;
+    'txt-clip'?: ImgixTxtClip;
+    'blend-align'?: ImgixMarkAlign;
+    'blend-mode'?: ImgixBlendMode;
+    'blend-pad'?: number;
+    'blend-alpha'?: number;
+    mask?: string;
+    'blend-w'?: number;
+    'blend-x'?: number;
     fm?: ImgixFormat;
 };
 
-export type QueryParamsInput = Omit<ImgixUrlQueryParams, 'min-h'> & { minH?: number };
+type KebabToCamelCase<S extends string> = S extends `${infer T}-${infer U}`
+    ? `${T}${Capitalize<KebabToCamelCase<U>>}`
+    : S;
+
+export type QueryParamsInput = {
+    [K in keyof ImgixUrlQueryParams as KebabToCamelCase<K>]: ImgixUrlQueryParams[K];
+};
 
 const pickTrueInObject = <K extends string>(obj: Record<K, boolean>): Partial<Record<K, true>> =>
     pickBy(obj, (_key, value): value is true => value);
-const pickTrueObjectKeys = pipe(
+const pickTrueObjectKeys = flow(
     pickTrueInObject,
     // tslint:disable-next-line no-unbound-method
     Object.keys,
 );
+
 const undefinedIfEmptyString = (str: string): string | undefined => (str === '' ? undefined : str);
 const joinWithComma = (strs: string[]) => strs.join(',');
-const serializeImgixUrlQueryParamListValue = pipe(
+const serializeImgixUrlQueryParamListValue = flow(
     pickTrueObjectKeys,
     joinWithComma,
     undefinedIfEmptyString,
@@ -115,34 +175,52 @@ const serializeImgixUrlQueryParamListValue = pipe(
 
 const mapToSerializedListValueIfDefined = mapValueIfDefined(serializeImgixUrlQueryParamListValue);
 
-const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQueryInput =>
-    pipe(
-        (): Record<keyof ImgixUrlQueryParams, string | number | undefined> => ({
-            ar: mapValueIfDefined((ar: ImgixAspectRatio) => `${ar.w}:${ar.h}`)(query.ar),
-            dpr: query.dpr,
-            auto: mapToSerializedListValueIfDefined(query.auto),
-            fit: query.fit,
-            w: query.w,
-            h: query.h,
-            rect: mapValueIfDefined((rect: ImgixRect) => `${rect.x},${rect.y},${rect.w},${rect.h}`)(
-                query.rect,
-            ),
-            q: query.q,
-            cs: query.cs,
-            crop: mapToSerializedListValueIfDefined(query.crop),
-            bg: query.bg,
-            ch: mapToSerializedListValueIfDefined(query.ch),
-            blur: query.blur,
-            faceindex: query.faceindex,
-            facepad: query.facepad,
-            'min-h': query.minH,
-            fm: query.fm,
-        }),
-        catMaybesDictionary,
-    )({});
+const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQueryInput => {
+    const imgixUrlQueryParams: Record<keyof ImgixUrlQueryParams, string | number | undefined> = {
+        ar: mapValueIfDefined((ar: ImgixAspectRatio) => `${ar.w}:${ar.h}`)(query.ar),
+        dpr: query.dpr,
+        auto: mapToSerializedListValueIfDefined(query.auto),
+        fit: query.fit,
+        w: query.w,
+        h: query.h,
+        rect: mapValueIfDefined((rect: ImgixRect) => `${rect.x},${rect.y},${rect.w},${rect.h}`)(
+            query.rect,
+        ),
+        q: query.q,
+        cs: query.cs,
+        crop: mapToSerializedListValueIfDefined(query.crop),
+        bg: query.bg,
+        ch: mapToSerializedListValueIfDefined(query.ch),
+        blur: query.blur,
+        faceindex: query.faceindex,
+        facepad: query.facepad,
+        'min-h': query.minH,
+        'mark-w': query.markW,
+        'mark-align': query.markAlign,
+        'mark-pad': query.markPad,
+        'mark-y': query.markY,
+        mark64: query.mark64,
+        blend64: query.blend64,
+        txt64: query.txt64,
+        'txt-color': query.txtColor,
+        'txt-size': query.txtSize,
+        'txt-align': query.txtAlign,
+        'txt-pad': query.txtPad,
+        'txt-width': query.txtWidth,
+        'txt-clip': query.txtClip,
+        fm: query.fm,
+        'txt-font': query.txtFont,
+        'blend-mode': query.blendMode,
+        'blend-alpha': query.blendAlpha,
+        'blend-pad': query.blendPad,
+        'blend-w': query.blendW,
+        mask: query.mask,
+        'blend-align': query.blendAlign,
+        'blend-x': query.blendX,
+        'mark-x': query.markX,
+    };
+    return catMaybesDictionary(imgixUrlQueryParams);
+};
 
 export const buildImgixUrl = (url: string) =>
-    pipe(
-        serializeImgixUrlQueryParamValues,
-        query => addQueryToUrl(query)(url),
-    );
+    flow(serializeImgixUrlQueryParamValues, (query) => addQueryToUrl(query)(url));
