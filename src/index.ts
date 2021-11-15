@@ -129,9 +129,12 @@ export type ImgixUrlQueryParams = {
     'mark-pad'?: number;
     'mark-y'?: number;
     mark64?: string;
+    mark?: string;
     'mark-x'?: number;
     blend64?: string;
+    blend?: string;
     txt64?: string;
+    txt?: string;
     'txt-color'?: string;
     'txt-size'?: number;
     'txt-align'?: ImgixMarkAlign;
@@ -218,6 +221,9 @@ const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQu
         'blend-align': query.blendAlign,
         'blend-x': query.blendX,
         'mark-x': query.markX,
+        mark: query.mark,
+        blend: query.blend,
+        txt: query.txt,
     };
     return catMaybesDictionary(imgixUrlQueryParams);
 };
