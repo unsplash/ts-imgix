@@ -221,6 +221,7 @@ const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQu
         mask: query.mask,
         'blend-align': query.blendAlign,
         'blend-x': query.blendX,
+        'blend-y': query.blendY,
         'mark-x': query.markX,
         mark: query.mark,
         blend: query.blend,
