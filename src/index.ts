@@ -149,6 +149,7 @@ export type ImgixUrlQueryParams = {
     mask?: string;
     'blend-w'?: number;
     'blend-x'?: number;
+    'blend-y'?: number;
     fm?: ImgixFormat;
 };
 
