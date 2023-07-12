@@ -123,6 +123,7 @@ export type ImgixUrlQueryParams = {
     cs?: ImgixColorSpace;
     faceindex?: number;
     facepad?: number;
+    'fp-z'?: number;
     'min-h'?: number;
     'mark-w'?: number;
     'mark-align'?: ImgixMarkAlign;
@@ -205,6 +206,7 @@ const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQu
         blur: query.blur,
         faceindex: query.faceindex,
         facepad: query.facepad,
+        'fp-z': query['fpZ'],
         'min-h': query.minH,
         'mark-w': query.markW,
         'mark-align': query.markAlign,
