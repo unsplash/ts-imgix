@@ -206,7 +206,7 @@ const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQu
         blur: query.blur,
         faceindex: query.faceindex,
         facepad: query.facepad,
-        'fp-z': query['fpZ'],
+        'fp-z': query.fpZ,
         'min-h': query.minH,
         'mark-w': query.markW,
         'mark-align': query.markAlign,
