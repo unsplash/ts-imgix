@@ -1,5 +1,4 @@
 // tslint:disable-next-line match-default-export-name
-import { ParsedUrlQueryInput } from 'querystring';
 import { addQueryToUrl } from 'url-transformers';
 import { pickBy } from './helpers';
 import { flow } from './helpers/flow';
@@ -187,7 +186,7 @@ const serializeImgixUrlQueryParamListValue = flow(
 
 const mapToSerializedListValueIfDefined = mapValueIfDefined(serializeImgixUrlQueryParamListValue);
 
-const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQueryInput => {
+const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): Record<string, string | number> => {
     const imgixUrlQueryParams: Record<keyof ImgixUrlQueryParams, string | number | undefined> = {
         ar: mapValueIfDefined((ar: ImgixAspectRatio) => `${ar.w}:${ar.h}`)(query.ar),
         dpr: query.dpr,
