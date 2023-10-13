@@ -186,7 +186,10 @@ const serializeImgixUrlQueryParamListValue = flow(
 
 const mapToSerializedListValueIfDefined = mapValueIfDefined(serializeImgixUrlQueryParamListValue);
 
-const buildParams = (query: QueryParamsInput): Record<string, string> => {
+/**
+ * Build a record of Imgix query params suitable as input to `URLSearchParams`.
+ */
+export const buildParams = (query: QueryParamsInput): Record<string, string> => {
     const imgixUrlQueryParams: Record<keyof ImgixUrlQueryParams, string | undefined> = {
         ar: mapValueIfDefined((ar: ImgixAspectRatio) => `${ar.w}:${ar.h}`)(query.ar),
         dpr: mapValueIfDefined(String)(query.dpr),
