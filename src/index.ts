@@ -1,5 +1,4 @@
 // tslint:disable-next-line match-default-export-name
-import { ParsedUrlQueryInput } from 'querystring';
 import { addQueryToUrl } from 'url-transformers';
 import { pickBy } from './helpers';
 import { flow } from './helpers/flow';
@@ -187,64 +186,67 @@ const serializeImgixUrlQueryParamListValue = flow(
 
 const mapToSerializedListValueIfDefined = mapValueIfDefined(serializeImgixUrlQueryParamListValue);
 
-const serializeImgixUrlQueryParamValues = (query: QueryParamsInput): ParsedUrlQueryInput => {
-    const imgixUrlQueryParams: Record<keyof ImgixUrlQueryParams, string | number | undefined> = {
+/**
+ * Build a record of Imgix query params suitable as input to `URLSearchParams`.
+ */
+export const buildParams = (query: QueryParamsInput): Record<string, string> => {
+    const imgixUrlQueryParams: Record<keyof ImgixUrlQueryParams, string | undefined> = {
         ar: mapValueIfDefined((ar: ImgixAspectRatio) => `${ar.w}:${ar.h}`)(query.ar),
-        dpr: query.dpr,
+        dpr: mapValueIfDefined(String)(query.dpr),
         auto: mapToSerializedListValueIfDefined(query.auto),
         fit: query.fit,
-        w: query.w,
-        h: query.h,
+        w: mapValueIfDefined(String)(query.w),
+        h: mapValueIfDefined(String)(query.h),
         rect: mapValueIfDefined((rect: ImgixRect) => `${rect.x},${rect.y},${rect.w},${rect.h}`)(
             query.rect,
         ),
-        q: query.q,
+        q: mapValueIfDefined(String)(query.q),
         cs: query.cs,
         crop: mapToSerializedListValueIfDefined(query.crop),
         bg: query.bg,
         ch: mapToSerializedListValueIfDefined(query.ch),
-        blur: query.blur,
-        faceindex: query.faceindex,
-        facepad: query.facepad,
-        'fp-z': query.fpZ,
-        'min-h': query.minH,
-        'mark-w': query.markW,
+        blur: mapValueIfDefined(String)(query.blur),
+        faceindex: mapValueIfDefined(String)(query.faceindex),
+        facepad: mapValueIfDefined(String)(query.facepad),
+        'fp-z': mapValueIfDefined(String)(query.fpZ),
+        'min-h': mapValueIfDefined(String)(query.minH),
+        'mark-w': mapValueIfDefined(String)(query.markW),
         'mark-align': query.markAlign,
-        'mark-pad': query.markPad,
-        'mark-y': query.markY,
+        'mark-pad': mapValueIfDefined(String)(query.markPad),
+        'mark-y': mapValueIfDefined(String)(query.markY),
         mark64: query.mark64,
         blend64: query.blend64,
         txt64: query.txt64,
         'txt-color': query.txtColor,
-        'txt-size': query.txtSize,
+        'txt-size': mapValueIfDefined(String)(query.txtSize),
         'txt-align': query.txtAlign,
-        'txt-pad': query.txtPad,
-        'txt-width': query.txtWidth,
+        'txt-pad': mapValueIfDefined(String)(query.txtPad),
+        'txt-width': mapValueIfDefined(String)(query.txtWidth),
         'txt-clip': query.txtClip,
-        'txt-lig': query.txtLig,
-        'txt-line': query.txtLine,
+        'txt-lig': mapValueIfDefined(String)(query.txtLig),
+        'txt-line': mapValueIfDefined(String)(query.txtLine),
         'txt-line-color': query.txtLineColor,
-        'txt-shad': query.txtShad,
+        'txt-shad': mapValueIfDefined(String)(query.txtShad),
         'txt-fit': query.txtFit,
-        'txt-x': query.txtX,
-        'txt-y': query.txtY,
+        'txt-x': mapValueIfDefined(String)(query.txtX),
+        'txt-y': mapValueIfDefined(String)(query.txtY),
         fm: query.fm,
         'txt-font': query.txtFont,
         'blend-mode': query.blendMode,
-        'blend-alpha': query.blendAlpha,
-        'blend-pad': query.blendPad,
-        'blend-w': query.blendW,
+        'blend-alpha': mapValueIfDefined(String)(query.blendAlpha),
+        'blend-pad': mapValueIfDefined(String)(query.blendPad),
+        'blend-w': mapValueIfDefined(String)(query.blendW),
         mask: query.mask,
         'blend-align': query.blendAlign,
-        'blend-x': query.blendX,
-        'blend-y': query.blendY,
-        'mark-x': query.markX,
-        mark: query.mark,
-        blend: query.blend,
-        txt: query.txt,
+        'blend-x': mapValueIfDefined(String)(query.blendX),
+        'blend-y': mapValueIfDefined(String)(query.blendY),
+        'mark-x': mapValueIfDefined(String)(query.markX),
+        mark: mapValueIfDefined(String)(query.mark),
+        blend: mapValueIfDefined(String)(query.blend),
+        txt: mapValueIfDefined(String)(query.txt),
     };
     return catMaybesDictionary(imgixUrlQueryParams);
 };
 
 export const buildImgixUrl = (url: string) =>
-    flow(serializeImgixUrlQueryParamValues, (query) => addQueryToUrl(query)(url));
+    flow(buildParams, (query) => addQueryToUrl(query)(url));
