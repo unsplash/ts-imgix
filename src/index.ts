@@ -158,6 +158,10 @@ export type ImgixUrlQueryParams = {
     'blend-x'?: number;
     'blend-y'?: number;
     fm?: ImgixFormat;
+    flip?: "h" | "v" | "hv";
+    orient?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 90 | 180 | 270;
+    // 0-359 degrees
+    rot?: number;
 };
 
 type KebabToCamelCase<S extends string> = S extends `${infer T}-${infer U}`
@@ -244,6 +248,9 @@ export const buildParams = (query: QueryParamsInput): Record<string, string> => 
         mark: mapValueIfDefined(String)(query.mark),
         blend: mapValueIfDefined(String)(query.blend),
         txt: mapValueIfDefined(String)(query.txt),
+        flip: query.flip,
+        orient: mapValueIfDefined(String)(query.orient),
+        rot: mapValueIfDefined(String)(query.rot),
     };
     return catMaybesDictionary(imgixUrlQueryParams);
 };
