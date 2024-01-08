@@ -158,7 +158,7 @@ export type ImgixUrlQueryParams = {
     'blend-x'?: number;
     'blend-y'?: number;
     fm?: ImgixFormat;
-    flip?: "h" | "v" | "hv";
+    flip?: 'h' | 'v' | 'hv';
     orient?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 90 | 180 | 270;
     // 0-359 degrees
     rot?: number;
