@@ -122,6 +122,9 @@ export type ImgixUrlQueryParams = {
     cs?: ImgixColorSpace;
     faceindex?: number;
     facepad?: number;
+    // Positions X and Y for Focal Point Crop. For these points to be set on an image, fit=crop and crop=focalpoint must also be set.
+    'fp-x'?: number;
+    'fp-y'?: number;
     'fp-z'?: number;
     'min-h'?: number;
     'mark-w'?: number;
@@ -212,6 +215,8 @@ export const buildParams = (query: QueryParamsInput): Record<string, string> => 
         blur: mapValueIfDefined(String)(query.blur),
         faceindex: mapValueIfDefined(String)(query.faceindex),
         facepad: mapValueIfDefined(String)(query.facepad),
+        'fp-x': mapValueIfDefined(String)(query.fpX),
+        'fp-y': mapValueIfDefined(String)(query.fpY),
         'fp-z': mapValueIfDefined(String)(query.fpZ),
         'min-h': mapValueIfDefined(String)(query.minH),
         'mark-w': mapValueIfDefined(String)(query.markW),
