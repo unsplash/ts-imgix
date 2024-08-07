@@ -1,5 +1,8 @@
 # ts-imgix
 
+> [!WARNING] 
+> Unsupported. At time of writing we've migrated to [typescript-imgix-url-params](https://github.com/imgix/typescript-imgix-url-params) and native web URL APIs.
+
 Strongly-typed imgix URL builder function, `buildImgixUrl`.
 
 ```ts
